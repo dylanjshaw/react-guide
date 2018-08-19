@@ -1,0 +1,22 @@
+.Cockpit {
+  text-align: center;
+}
+
+.BigButton {
+     font: inherit;
+     border: 1px solid blue;
+     padding: 8px;
+     margin: 10px;
+}
+
+.red:hover {
+	background-color: red !important;
+	color: white;
+	cursor: pointer;
+}
+
+.green:hover {
+	background-color: green !important;
+	color: white;
+	cursor: pointer;
+}
