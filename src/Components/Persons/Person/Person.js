@@ -1,19 +1,69 @@
-import React from 'react';
+import React, {Component} from 'react';
 import classes from './Person.css';
-// import Radium, {StyleRoot} from 'radium';
+import PropTypes from 'prop-types';
+import {AuthContext} from '../../../Containers/App'
 
-const person = (props) => {
 
-	return (
-		<div className={classes.Person}>
-			<p> My name is {props.name} and I'm {props.age} years old.</p>
-			<button type='submit' onClick={props.delete}>X</button>
-			<span>Name:</span><input id='name' type='text' onChange={props.nameChange} value={props.name}/>
-			<span>Age:</span><input id='age' type='text' onChange={props.ageChange} value={props.age}/>
-		</div>
-	)	
+
+class Person extends Component {
+	constructor(props) {
+		super(props)
+		this.inputElement = React.createRef();
+	}
+
+	shouldComponentUpdate(nextProps, nextState){
+		console.log('[UPDATE Person.js] Inside shouldComponentUpdate');
+		return true;
+	}
+
+	componentWillUpdate(nextProps, nextState){
+		console.log('[UPDATE Person.js] Inside componentWillUpdate');
+	}
+	
+	componentDidUpdate(){
+		console.log('[UPDATE Person.js] Inside componentDidUpdate');
+	}	
+
+	componentDidMount(){
+		console.log('[UPDATE Person.js] Inside componentDidUpdate');
+		if(this.props.index == 0)this.inputElement.current.focus();
+	}
+
+	render(){
+		console.log('[UPDATE Person.js] Inside render');
+		return (
+			<div className={classes.Person}>
+				<AuthContext.Consumer>
+					{ auth => auth ? <p>Social Security: 123-45-6789</p> : null }
+				</AuthContext.Consumer>
+				<p> My name is {this.props.name} and I'm {this.props.age} years old.</p>
+				<button type='submit' onClick={this.props.delete}>X</button>
+				<span>Name:</span>
+				<input 
+					ref={this.inputElement}
+					id='name' 
+					type='text' 
+					onChange={this.props.nameChange} 
+					value={this.props.name}/>
+				<span>Age:</span>
+				<input 
+					id='age' 
+					type='text' 
+					onChange={this.props.ageChange} 
+					value={this.props.age}/>
+			</div>
+		);
+	}
 }
 
-// export default Radium(person);
-export default person;
+Person.propTypes = {
+	name: PropTypes.string,
+	age: PropTypes.string,
+	delete: PropTypes.func,
+	nameChange: PropTypes.func,
+	ageChange: PropTypes.func
+}
+
+
+export default Person;
 
